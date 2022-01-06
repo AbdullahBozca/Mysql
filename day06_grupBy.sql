@@ -70,7 +70,90 @@ ORDER BY max;
   gruplandıran ve isime göre ters sırasıda listeyen sorguyu yazınız.
  -----------------------------------------------------------------------------*/ 
  
- select isim, urun_adi, sum(urun_miktari) from manav where urun_adi is not null group by isim,urun_adi order by isim desc;
+ SELECT 
+    isim, urun_adi, SUM(urun_miktari)
+FROM
+    manav
+WHERE
+    urun_adi IS NOT NULL
+GROUP BY isim , urun_adi
+ORDER BY isim DESC;
+
+/* ----------------------------------------------------------------------------
+  ORNEK5: kisi ismine ve urun adına göre (gruplayarak) satılan ürünlerin toplamını bulan ve
+  ve bu toplam değeri 3 ve fazlası olan kayıtları toplam urun miktarlarina göre
+  ters siralayarak listeyen sorguyu yazınız.
+ -----------------------------------------------------------------------------*/ 
+ 
+ SELECT 
+    isim, urun_adi, SUM(urun_miktari)
+FROM
+    manav
+GROUP BY isim , urun_adi
+HAVING SUM(urun_miktari) >= 3
+ORDER BY SUM(urun_miktari) DESC;
+ 
+ /* ----------------------------------------------------------------------------
+  ORNEK6: satılan urun_adi'na göre (gruplayarak) MAX urun sayılarını sıralayarak listeleyen 
+  sorguyu yazınız. NOT: Sorgu, sadece MAKS urun_miktari MIN urun_miktarına 
+  eşit olmayan kayıtları listelemelidir.
+ -----------------------------------------------------------------------------*/ 
+ 
+ select urun_adi ,max(urun_miktari) from manav 
+ group by urun_adi
+ having max(urun_miktari) != min(urun_miktari);
+ 
+ /*============================= DISTINCT =====================================
+    
+    DISTINCT cümleciği bir SORGU ifadesinde benzer olan satırları filtrelemek
+    için kullanılır. Dolayısıyla seçilen sutun yada sutunlar için benzersiz veri
+    içeren satırlar oluşturmaya yarar.
+   
+    SYNTAX
+    -------
+    SELECT DISTINCT sutun_adi1, sutun_adi2, sutun_adi3
+    FROM  tablo_adı;
+==============================================================================*/
+
+/* ----------------------------------------------------------------------------
+  ORNEK1: satılan farklı meyve türlerinin sayısını listeleyen sorguyu yazınız.
+-----------------------------------------------------------------------------*/  
+SELECT 
+    COUNT(DISTINCT urun_adi) urun_sayısı
+FROM
+    manav; 
+    
+/* -----------------------------------------------------------------------------
+  ORNEK2: satılan meyve + isimlerin farklı olanlarını listeyen sorguyu yazınız.
+------------------------------------------------------------------------------*/
+select distinct urun_adi,isim from manav;
+
+/* ----------------------------------------------------------------------------
+  ORNEK3: satılan meyvelerin urun_mikarlarinin benzersiz  olanlarının 
+  toplamlarini listeyen sorguyu yazınız.
+-----------------------------------------------------------------------------*/
+select sum(distinct urun_miktari) toplam from manav;
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
 
 
