@@ -246,7 +246,15 @@ ORDER BY b.bolum_isim , p.personel_isim;
   (emine kimin müdürüyse onun satirinda yazsin) 
   maas siralı olarak (Çoktan aza) listeleyiniz.
 ------------------------------------------------------------------------------*/
-select b.bolum_isim,p.personel_isim,p.maas,p.mudur_id from bolumler b right join personel p ON b.bolum_id = p.bolum_id where p.mudur_id in(1222,1333) order by p.maas desc;
+SELECT 
+    b.bolum_isim, p.personel_isim, p.maas, p.mudur_id,(select personel_isim from personel where p.mudur_id=personel_id) mudur_isim
+FROM
+    bolumler b
+        RIGHT JOIN
+    personel p ON b.bolum_id = p.bolum_id
+WHERE
+    p.mudur_id IN (1222 , 1333)
+ORDER BY p.maas DESC;
 
 
 
